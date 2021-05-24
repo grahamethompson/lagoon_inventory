@@ -15,8 +15,8 @@ Hosts are grouped by Lagoon metadata.
 ### Clone the repo locally
 
 ```
-git clone git@bitbucket.org:webdesignanddevelopment/ansible_tools.git
-cd ansible_tools
+git clone https://github.com/grahamethompson/lagoon_inventory.git
+cd lagoon_inventory
 ```
 
 ### Symlink roles
