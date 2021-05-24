@@ -1,0 +1,4 @@
+- name: Get lagoon graphql token
+  shell:
+    cmd: "ssh -p {{ lagoon_port }} -t {{ lagoon_ssh }} token"
+  register: lagoon_token

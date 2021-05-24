@@ -1,0 +1,6 @@
+mutation updateProjectMetadata {
+  updateProjectMetadata(input: {id: {{ id }}, patch: {key: "{{ key }}", value: "{{ value }}" }}) {
+    id
+    metadata
+  }
+}

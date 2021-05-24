@@ -1,0 +1,5 @@
+query getMetadata {
+  projectByName(name: "{{ projectName }}" ) {
+    metadata
+  }
+}

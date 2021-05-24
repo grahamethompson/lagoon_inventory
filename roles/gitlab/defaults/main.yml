@@ -1,0 +1,5 @@
+---
+gitlab_personal_access_token:
+gitlab_endpoint: https://projects.govcms.gov.au
+gitlab_api_version: api/v4
+gitlab_api_url: "{{ gitlab_endpoint }}/{{ gitlab_api_version }}"

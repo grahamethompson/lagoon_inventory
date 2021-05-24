@@ -1,0 +1,22 @@
+#jinja2: lstrip_blocks: "True", trim_blocks: "True"
+all:
+  hosts:
+    {% for item in lagoon_projects.json.data.allProjects %}
+      {#% if ("project-status", "production") in dict(item.metadata | from_json ).items() %#}
+    {{ item.name | replace(".", "_") | replace("-", "_")}}:
+      ansible_user: {{ item.name }}-master
+      vars:
+      {% for (key, value) in dict(item.metadata | from_json ).items() %}
+        {{key}}: {{ value }}
+      {% endfor %}
+      {#% endif %#}
+    {% endfor %}
+
+
+{% for (key, value) in dict(hosts_by_metadata).items() %}
+{{ key  | replace(".", "_") | replace("-", "_") }}:
+  hosts:
+  {% for name in value %}
+    {{ name  | replace(".", "_") | replace("-", "_") }}:
+  {% endfor %}
+{% endfor %}

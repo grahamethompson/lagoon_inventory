@@ -1,0 +1,5 @@
+- name: Log all vars
+  template:
+    src: ../../templates/dump_output.j2
+    dest: ../logs/ansible.log
+  delegate_to: localhost

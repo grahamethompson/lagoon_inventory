@@ -1,0 +1,7 @@
+query allProjects {
+  allProjects {
+    name
+    id
+    metadata
+  }
+}

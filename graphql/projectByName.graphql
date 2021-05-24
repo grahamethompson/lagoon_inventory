@@ -1,0 +1,11 @@
+query {
+  projectByName(
+    name: "{{ projectName }}" 
+  ) {
+    id
+    gitUrl
+    branches
+    productionEnvironment
+    pullrequests
+  }
+}

@@ -1,0 +1,7 @@
+query projectsByMetadata {
+  projectsByMetadata(metadata: {key: "{{ metadata_key }}", value: "{{ metadata_value }}"} ) {
+    id
+    name
+    metadata
+  }
+}

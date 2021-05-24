@@ -1,0 +1,13 @@
+---
+lagoon_graphql_url: https://api-lagoon.govcms.amazee.io/graphql
+lagoon_ssh_url: ssh-lagoon.govcms.amazee.io
+lagoon_ssh_user: lagoon
+lagoon_port: 30831
+lagoon_ssh: "{{ lagoon_ssh_user }}@{{ lagoon_ssh_url }}"
+
+## Default lagoon config
+#lagoon_graphql_url: https://api.lagoon.amazeeio.cloud/graphql
+#lagoon_ssh_url: ssh.lagoon.amazeeio.cloud
+#lagoon_ssh_user: lagoon
+#lagoon_port: 32222
+#lagoon_ssh: "{{ lagoon_ssh_user }}@{{ lagoon_ssh_url }}"

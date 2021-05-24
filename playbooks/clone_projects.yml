@@ -1,0 +1,55 @@
+### Clone gitlab projects to the ./projects folder for subsequent patching etc.
+#
+# The drupal versions of projects can be set in the 'Git clone Gitlab project repos by filter' task.
+# Arbitrary tags from github can also be used to pull in which ever project is required.
+#
+# ToDo: switch to using the topic query argument if running GitLab 13.12.
+# eg. url: "{{ gitlab_endpoint }}/api/v4/projects?simple=true&topic={{ topic }}"
+---
+- name: Clone projects from gitlab
+  hosts: localhost
+  gather_facts: false
+  roles:
+    - gitlab
+
+  tasks:
+
+    - name: GitLab Get | Get All Projects
+      uri:
+        url: "{{ gitlab_api_url }}/projects?simple=true&per_page=100"
+        method: GET
+        validate_certs: no
+        status_code:
+          - 200
+          - 201
+          - 409
+        headers:
+          Content-Type: application/json
+          Authorization: Bearer {{ gitlab_personal_access_token }}
+      register: gitlab_projects
+
+    - name: Localhost log | Log output from Get All Projects
+      copy:
+        content: "{{ gitlab_projects.json | to_nice_json }}"
+        dest: "../logs/gitlab_projects.json"
+      delegate_to: localhost
+
+    - name: Localhost git | Git clone Gitlab project repos by filter
+      git:
+        repo: "{{ item.ssh_url_to_repo }}"
+        dest: "../projects/{{ item.name }}"
+        version: master
+      with_items: "{{ gitlab_projects.json }}"
+      when:
+        - (item.tag_list | lower is search("drupal9") or
+          item.tag_list | lower is search("drupal8"))
+        - item.tag_list | lower is not search("scaffold")
+        - item.archived is not true
+
+## all possible Gitlab drupalX tags
+#      when:
+#        - (item.tag_list|tojson is search("drupal9") or
+#          item.tag_list|lower is search("drupal8") or
+#          item.tag_list|lower is search("drupal7"))
+#        - item.tag_list|lower is not search("scaffold")
+#        - item.archived is not true

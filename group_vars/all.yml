@@ -1,0 +1,4 @@
+---
+ansible_host: ssh-lagoon.govcms.amazee.io
+ansible_port: 30831
+ansible_connection: ssh

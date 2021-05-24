@@ -1,0 +1,40 @@
+---
+##  ansible-playbook playbooks/populate_inventory.yml
+- name: List all sites as hosts
+  hosts: localhost
+  become: false
+  gather_facts: false
+  roles:
+    - lagoon
+
+  tasks:
+
+    - name: Lagoon GraphQL | Get all projects from Lagoon
+      uri:
+        url: "{{ lagoon_graphql_url }}"
+        method: POST
+        headers:
+          Authorization: 'Bearer {{ lagoon_token.stdout }}'
+        body_format: json
+        body:
+          query: '{{ lookup("template", "../graphql/allProjects.graphql") }}'
+      register: "lagoon_projects"
+
+    - name: Localhost log | Log output GitLab Projects
+      copy:
+        content: "{{ lagoon_projects.json.data.allProjects }}"
+        dest: "../logs/lagoon_projects.json"
+      delegate_to: localhost
+
+    - name: Localhost | Organise hosts by metadata
+      set_fact:
+        hosts_by_metadata: "{{ lagoon_projects.json.data.allProjects | organise_hosts_by_metadata }}"
+
+#    - debug: var=hosts_by_metadata
+
+    - name: Localhost inventory |  Write out hosts to inventory
+      template:
+        dest: ../hosts/inventory.yml
+        src: ../templates/list_hosts.j2
+
+
