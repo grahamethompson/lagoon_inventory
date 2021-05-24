@@ -1,4 +1,4 @@
-Lagoon inventory generator
+Ansible inventory generator for Lagoon
 ===========================
 
 Ansible playbook and supporting files to generate an inventory of hosts for projects hosted in an Amazee.io Lagoon.
