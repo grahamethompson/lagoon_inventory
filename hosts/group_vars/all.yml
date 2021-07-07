@@ -1,0 +1,4 @@
+---
+ansible_host: ssh.lagoon.amazeeio.cloud
+ansible_port: 32222
+ansible_connection: ssh
